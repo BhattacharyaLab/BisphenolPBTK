@@ -1,0 +1,684 @@
+TOTAL_MASS := AB + AF + AK + AL + AR + APL + AEL_blood + AEL + AB_fetus + AL_fetus + AR_fetus + AB_conj_fetus + AL_conj_fetus + ABconj + AFconj + AKconj + ALconj + ARconj + APLconj + AELconj_blood + AELconj + AGBLel
+TOTAL_MASS_d8 := AB_d8 + AF_d8 + AK_d8 + AL_d8 + AR_d8 + APL_d8 + AEL_blood_d8 + AEL_d8 + AB_fetus_d8 + AL_fetus_d8 + AR_fetus_d8 + AB_conj_fetus_d8 + AL_conj_fetus_d8 + ABconj_d8 + AFconj_d8 + AKconj_d8 + ALconj_d8 + ARconj_d8 + APLconj_d8 + AELconj_blood_d8 + AELconj_d8 + AGBLel
+
+MASS_BALANCE_SC := DOSE - (TOTAL_MASS + ASC + ASCf)
+MASS_BALANCE_IV := TOTAL_IV - TOTAL_MASS
+
+
+
+###
+# Fetal total burden in nmol
+######
+fBPS_nmol_total := (AL_fetus + AR_fetus + AB_fetus) * 1E9
+fBPSconj_nmol_total := (AL_conj_fetus + AR_conj_fetus + AB_conj_fetus) * 1E9
+
+
+###
+# Fetal total concentration in ng/ml
+######
+fBPS_ngml_total := (AL_fetus + AR_fetus + AB_fetus) / V_fetus * MW_BPS  * 1E6
+fBPSconj_ngml_total := (AL_conj_fetus + AR_conj_fetus + AB_conj_fetus) / V_fetus * MW_BPSG  * 1E6
+
+
+
+#
+# Maternal BPS & BPSG
+#   ng/ml
+#   nM
+###################
+CA_ngml := CA*MW_BPS*10^6
+CAconj_ngml := CAconj*MW_BPSG*10^6
+CAtotal_ngml := CA_ngml + CAconj_ngml
+
+CA_nM := CA*1e9
+CA_conj_nM := CAconj*1e9
+
+CA_uM := CA*1e6
+CA_conj_uM := CAconj*1e6
+
+
+#
+# Fetal BPS & BPSG
+#   ng/ml
+#   nM
+###################
+CEF_ngml := CA_fetus*MW_BPS*1E6
+CEFconj_ngml := CA_conj_fetus*MW_BPSG*1E6
+CEFtotal_ngml := CEF_ngml + CEFconj_ngml
+
+CEF_nM := CA_fetus*1e9
+CEF_conj_nM := CA_conj_fetus*1e9
+
+CEF_uM := CA_fetus*1e6
+CEF_conj_uM := CA_conj_fetus*1e6
+
+
+
+#
+# Maternal BPS_d8 & BPSG_d8
+#   ng/ml
+#   nM
+###################
+CA_d8_ngml := CA_d8*MW_BPS_d8*10^6
+CAconj_d8_ngml := CAconj_d8*MW_BPSG_d8*10^6
+CAtotal_d8_ngml := CA_d8_ngml + CAconj_d8_ngml
+
+CA_d8_nM := CA_d8*1e9
+CA_conj_d8_nM := CAconj_d8*1e9
+
+CA_d8_uM := CA_d8*1e6
+CA_conj_d8_uM := CAconj_d8*1e6
+
+
+#
+# Fetal BPS_d8 & BPSG_d8
+#   ng/ml
+#   nM
+###################
+CEF_d8_ngml := CA_fetus_d8*MW_BPS_d8*1E6
+CEFconj_d8_ngml := CA_conj_fetus_d8*MW_BPSG_d8*1E6
+CEFtotal_d8_ngml := CEF_d8_ngml + CEFconj_d8_ngml
+
+CEF_d8_nM := CA_fetus_d8*1e9
+CEF_conj_d8_nM := CA_conj_fetus_d8*1e9
+
+CEF_d8_uM := CA_fetus_d8*1e6
+CEF_conj_d8_uM := CA_conj_fetus_d8*1e6
+
+
+#
+# Maternal BPS & BPSG concentrations (M)
+###################
+CF := AF/VF
+CK := AK/VK
+CL := AL/VL
+CR := AR/VR
+CPL := APL/VPL
+#CEF := AEF/VEF
+CA := AB/VB
+
+
+
+CVF := CF/PF
+CVK := CK/PK
+CVL := CL/PL
+CVR := CR/PR
+CVPL := CPL/PPL
+
+
+
+CFconj := AFconj/VF
+CKconj := AKconj/VK
+CLconj := ALconj/VL
+CRconj := ARconj/VR
+CPLconj := APLconj/VPL
+CAconj := ABconj/VB
+
+
+
+CVFconj := CFconj/PFconj
+CVKconj := CKconj/PKconj
+CVLconj := CLconj/PLconj
+CVRconj := CRconj/PRconj
+CVPLconj := CPLconj/PPLconj
+
+
+
+#
+# Fetal BPS & BPSG concentrations (M)
+###################
+CA_fetus := AB_fetus/VB_fetus
+CA_fetus_nM := CA_fetus*1e9
+CL_fetus := AL_fetus/VL_fetus
+CR_fetus := AR_fetus/VR_fetus
+
+
+CVL_fetus := CL_fetus/PL    # same partitioning as mother
+CVR_fetus := CR_fetus/PR_fetus    # DIFFERENT partitioning as mother
+
+
+
+CA_conj_fetus := AB_conj_fetus/VB_fetus
+CA_conj_fetus_nM := CA_conj_fetus*1e9
+CL_conj_fetus := AL_conj_fetus/VL_fetus
+CR_conj_fetus := AR_conj_fetus/VR_fetus
+
+
+CVL_conj_fetus := CL_conj_fetus/PLconj    # same partitioning as mother
+CVR_conj_fetus := CR_conj_fetus/PRconj_fetus   # DIFFERENT partitioning as mother
+
+
+#
+# Maternal BPS_d8 & BPSG _d8 concentrations (M)
+###################
+CF_d8 := AF_d8/VF
+CK_d8 := AK_d8/VK
+CL_d8 := AL_d8/VL
+CR_d8 := AR_d8/VR
+CPL_d8 := APL_d8/VPL
+#CEF_d8 := AEF_d8/VEF
+CA_d8 := AB_d8/VB
+
+
+CVF_d8 := CF_d8/PF
+CVK_d8 := CK_d8/PK
+CVL_d8 := CL_d8/PL
+CVR_d8 := CR_d8/PR
+CVPL_d8 := CPL_d8/PPL
+
+
+
+CFconj_d8 := AFconj_d8/VF
+CKconj_d8 := AKconj_d8/VK
+CLconj_d8 := ALconj_d8/VL
+CRconj_d8 := ARconj_d8/VR
+CPLconj_d8 := APLconj_d8/VPL
+CAconj_d8 := ABconj_d8/VB
+
+
+CVFconj_d8 := CFconj_d8/PFconj
+CVKconj_d8 := CKconj_d8/PKconj
+CVLconj_d8 := CLconj_d8/PLconj
+CVRconj_d8 := CRconj_d8/PRconj
+CVPLconj_d8 := CPLconj_d8/PPLconj
+
+
+#
+# Fetal BPS & BPSG concentrations (M)
+###################
+CA_fetus_d8 := AB_fetus_d8/VB_fetus
+CA_fetus_d8_nM := CA_fetus_d8*1e9
+CL_fetus_d8 := AL_fetus_d8/VL_fetus
+CR_fetus_d8 := AR_fetus_d8/VR_fetus
+
+
+CVL_fetus_d8 := CL_fetus_d8/PL          # same partitioning as mother
+CVR_fetus_d8 := CR_fetus_d8/PR_fetus    # DIFFERENT partitioning as mother
+
+
+
+CA_conj_fetus_d8 := AB_conj_fetus_d8/VB_fetus
+CA_conj_fetus_d8_nM := CA_conj_fetus_d8*1e9
+CL_conj_fetus_d8 := AL_conj_fetus_d8/VL_fetus
+CR_conj_fetus_d8 := AR_conj_fetus_d8/VR_fetus
+
+
+CVL_conj_fetus_d8 := CL_conj_fetus_d8/PLconj          # same partitioning as mother
+CVR_conj_fetus_d8 := CR_conj_fetus_d8/PRconj_fetus    # DIFFERENT partitioning as mother
+
+
+
+#
+# Maternal & fetal metabolism of BPS
+###################
+Vmax := Vmax_mg_h*(VL ^ 0.75)*10^(-3)/MW_BPS
+Km := Km_mg_L*10^(-3)/MW_BPS
+Vmax_conj_fetus := Vmax_mg_h_fetus*(VL_fetus ^ 0.75)*10^(-3)/MW_BPS
+Km_conj_fetus := Km_mg_L_fetus*10^(-3)/MW_BPS
+
+
+# bioavailiability for SC absorption
+FSC = 1
+
+
+DOSE_g := PDOSE * BW
+DOSE := DOSE_g/MW_BPS
+
+
+
+###
+# Multiple SC dosing for simulation
+#     same dose administered every PERIOD hours (dose sane as single Gingrich dose(
+#
+# To do multiple same dose administrations do:
+#       PSCDOSE_mBPA = xxxx
+#       IS_MULTI = 1
+#       PERIOD = yy
+############
+
+IS_MULTI = 0
+PERIOD = 24
+DOSE_MULTI := IS_MULTI * DOSE
+
+
+
+
+# BPS maternal dosing for Corbel (2013)
+IV_DOSE_g := PIV_DOSE*BW/24
+IV_DOSE_per_h := IV_DOSE_g/MW_BPS
+IV_DOSE = 0
+    at time>=1e-8: IV_DOSE=IV_DOSE_g/MW_BPS
+    at time>=24: IV_DOSE=0;
+
+
+# BPS-G maternal dosing for Corbel (2013)
+IV_conj_DOSE_g := PIV_conj_DOSE*BW/24
+IV_conj_DOSE_per_h := IV_DOSE_g/MW_BPS
+IV_conj_DOSE = 0
+    at time>=1e-8: IV_conj_DOSE=IV_conj_DOSE_g/MW_BPS
+    at time>=24: IV_conj_DOSE=0;
+
+
+# BPS fetal dosing for Corbel (2013)
+IV_fetal_DOSE_g := PIV_fetal_DOSE*V_fetus/24
+IV_fetal_DOSE_per_h := IV_DOSE_g/MW_BPS
+IV_fetal_DOSE = 0
+    at time>=1e-8: IV_fetal_DOSE = IV_fetal_DOSE_g/MW_BPS
+    at time>=24: IV_fetal_DOSE = 0;
+    
+    
+
+# BPS-G fetal dosing for Corbel (2013)
+IV_conj_fetal_DOSE_g := PIV_conj_fetal_DOSE*V_fetus/24
+IV_conj_fetal_DOSE_per_h := IV_DOSE_g/MW_BPS
+IV_conj_fetal_DOSE = 0
+    at time>=1e-8: IV_conj_fetal_DOSE = IV_conj_fetal_DOSE_g/MW_BPS
+    at time>=24: IV_conj_fetal_DOSE = 0;
+
+
+
+# DOSING PARAMETERS
+#     units are g/kg(/day - for IV doses)
+#     defaults are 0 (no dosing)
+PDOSE = 0 #0.5*10^(-3)
+PIV_DOSE = 0 #2*10^(-3)
+PIV_conj_DOSE = 0
+
+PIV_fetal_DOSE = 0
+PIV_conj_fetal_DOSE = 0
+
+
+
+# IV BOLUS DOSING
+##################
+
+PIV_BOLUS = 0    						# mol/kg
+IV_BOLUS = PIV_BOLUS*BW					# mol
+PIV_conj_BOLUS = 0						# mol/kg
+IV_conj_BOLUS = PIV_conj_BOLUS*BW		# mol
+
+PIV_d8_BOLUS = 0						# mol
+IV_d8_BOLUS = PIV_d8_BOLUS				# mol
+PIV_conj_d8_BOLUS = 0				# mol
+IV_conj_d8_BOLUS = PIV_conj_d8_BOLUS # mol
+
+
+
+# Maternal blood flows
+####################
+
+SF = 1
+BW = 76.25
+QCC = 6.9
+QFC = 0.091
+QKC = 0.064
+QLC = 0.183
+QPLC = 0.0513
+QRC = 1 - QFC - QKC - QLC - QPLC
+
+
+
+# Fetus blood flows
+###################
+
+QRC_fetus = 1 - QLC
+
+
+# Maternal organ volumes
+#######################
+
+VFC = 0.168
+VKC = 0.003
+VLC = 0.015
+VBC = 0.045
+# placenta + embryo/fetus
+VPLEFC = 0.078
+
+# embryo/fetus fractional volume
+VEFC = 0.0525
+
+# placenta fractional volume
+VPLC = VPLEFC - VEFC
+
+# rest of body fractional volume
+VRC = 1 - VFC - VKC -VLC - VBC - VPLEFC
+
+
+
+
+
+
+QC = QCC * BW ^ SF
+QF = QFC * QC
+QK = QKC * QC
+QL = QLC * QC
+QPL = QPLC * QC
+QR = QRC * QC
+
+
+QC_fetus = QCC * V_fetus
+QL_fetus = QLC * QC_fetus
+QR_fetus = (1 - QLC) * QC_fetus 
+
+
+Vbody = BW
+V_fetus = VEFC*Vbody
+VF = VFC * Vbody
+VK = VKC * Vbody
+VL = VLC * Vbody
+VPL = VPLC * Vbody
+VEF = VEFC * Vbody
+VR = VRC * Vbody
+VB = VBC * Vbody
+
+VB_fetus := VBC*V_fetus
+VL_fetus := VLC*V_fetus    # same fractional size as mother
+VR_fetus := (1 - VLC - VBC)*V_fetus
+
+
+Ka1 = 0.15
+Ka2 = 0
+Kt = 0
+
+
+k1t = 0
+k2t = 0
+Kd_fetus = 0
+
+
+
+
+MW_BPS = 250.275
+MW_BPSG = 426.385
+MW_BPS_d8 = 258.275
+MW_BPSG_d8 = 434.385
+
+
+
+PF = 9.81
+PK = 1.83
+PL = 0.9
+PR = 1.12
+PPL = 1
+#PEF = 1
+
+
+
+
+PFconj = 0.22
+PKconj = 5.61
+PLconj = 6.63
+PRconj = 0.51
+PPLconj = 1
+#PEFconj = 1
+
+PR_fetus = 0.51
+PRconj_fetus = 0.51
+
+#PA1 = 5.48816
+#PA2 = 0.03611
+
+
+
+
+#PA1conj = 0.8023
+#PA2conj = 0.06012
+
+
+
+
+Vmax_mg_h = 450
+Km_mg_L = 0.05
+Vmax_mg_h_fetus = 450
+Km_mg_L_fetus = 0.05
+Kel = 0
+Kel_blood = 0
+Kelconj = 0
+Kelconj_blood = 0
+
+
+KGBLel = 0
+Kd_conj = 0
+
+
+
+
+Vmax_gbl_conj = 0
+Km_gbl_conj = 11
+
+
+Vmax_ki = 0
+Km_ki = 1
+
+
+ASC = FSC*DOSE
+ASCf = 0
+    at TIME % PERIOD < 1: ASC = ASC + FSC * DOSE_MULTI
+    
+Ain = 0
+AF = 0
+AK = 0
+AEL = 0
+AL = 0
+AM = 0
+AR = 0
+APL = 0
+AEF = 0
+AB = IV_BOLUS
+AS = 0
+AFconj = 0
+AKconj = 0
+AELconj = 0
+AGBLel = 0
+ALconj = 0
+AMconj = 0
+ARconj = 0
+APLconj = 0
+AEFconj = 0
+ABconj = IV_conj_BOLUS
+ASconj = 0
+
+AF_d8 = 0
+AK_d8 = 0
+AEL_d8 = 0
+AL_d8 = 0
+AM_d8 = 0
+AR_d8 = 0
+APL_d8 = 0
+AEF_d8 = 0
+AB_d8 = 0
+AS_d8 = 0
+AFconj_d8 = 0
+AKconj_d8 = 0
+AELconj_d8 = 0
+AGBLel_d8 = 0
+ALconj_d8 = 0
+AMconj_d8 = 0
+ARconj_d8 = 0
+APLconj_d8 = 0
+AEFconj_d8 = 0
+ABconj_d8 = 0
+ASconj_d8 = 0
+
+
+AB_fetus = 0
+AB_conj_fetus = 0
+AL_fetus = 0
+AL_conj_fetus = 0
+AR_fetus = 0
+AR_conj_fetus = 0
+
+AB_fetus_d8 = IV_d8_BOLUS
+AB_conj_fetus_d8 = IV_conj_d8_BOLUS
+AL_fetus_d8 = 0
+AL_conj_fetus_d8 = 0
+AR_fetus_d8 = 0
+AR_conj_fetus_d8 = 0
+
+
+
+
+
+
+
+
+#
+# Maternal equations
+########################
+
+
+r01: ASC  -> AB; Ka1*ASC
+r02: ASC  -> ASCf; Kt*ASC
+r03: ASCf -> AB; Ka2*ASCf
+
+rIV: -> TOTAL_IV; IV_DOSE + IV_conj_DOSE + IV_fetal_DOSE + IV_conj_fetal_DOSE
+
+r01a:     -> AB; IV_DOSE
+rIV_conj: -> ABconj; IV_conj_DOSE
+
+# FAT
+r04:      -> AF; QF*(CA - CVF)
+rAF_d8:	  -> AF_d8; QF*(CA_d8 - CVF_d8)
+
+# KIDNEY
+r05:      -> AK; QK*(CA - CVK)
+rAK_d8:	  -> AK_d8; QK*(CA_d8 - CVK_d8)
+
+# renal clearance (from blood)
+rRenalCL: AB -> AEL_blood  ; Kel_blood*CA
+rRenalCL_d8: AB_d8 -> AEL_blood_d8  ; Kel_blood*CA_d8
+
+# renal clearance (from kidney)
+r06: AK   -> AEL; Kel*CVK + Vmax_ki*CK/(Km_ki+(CK + CK_d8))
+rAKel_d8: AK_d8 -> AEL_d8; Kel*CVK_d8 + Vmax_ki*CK_d8/(Km_ki+(CK+CK_d8))
+
+# LIVER
+r07:      -> AL; QL*(CA - CVL)
+r08: AL   -> ALconj; Vmax*CVL/(Km + (CVL + CVL_d8))
+r09:ALconj-> AL; Kd_conj*CVLconj
+
+r07_d8:      -> AL_d8; QL*(CA_d8 - CVL_d8)
+r08_d8: AL_d8   -> ALconj_d8; Vmax*CVL_d8/(Km + (CVL + CVL_d8))
+r09_d8:ALconj_d8 -> AL_d8; Kd_conj*CVLconj_d8
+
+
+# REST OF BODY
+r10:      -> AR; QR*(CA - CVR)
+r10_d8:    -> AR_d8; QR*(CA_d8 - CVR_d8)
+
+# PLACENTA
+r11:      -> APL; QPL*(CA - CVPL)
+r11_d8:      -> APL_d8; QPL*(CA_d8 - CVPL_d8)
+
+# PLACENTAL TRANSFER
+rPLtoFetus: APL -> AB_fetus; k1t*CVPL - k2t*CA_fetus
+
+rPLtoFetus_d8: APL_d8 -> AB_fetus_d8; k1t*CVPL_d8 - k2t*CA_fetus_d8
+
+
+# BPS in fetal blood
+#     possesses placental transfer
+rAB_fetus: -> AB_fetus; QL_fetus*CVL_fetus + QR_fetus*CVR_fetus - QC_fetus*CA_fetus
+
+rAB_fetus_d8: -> AB_fetus_d8; QL_fetus*CVL_fetus_d8 + QR_fetus*CVR_fetus_d8 - QC_fetus*CA_fetus_d8
+
+# BPS in fetal liver
+#     conjugation + deconjugtion
+rAL_fetus:   -> AL_fetus; QL_fetus*(CA_fetus - CVL_fetus)
+rAL_fetus_conjugation:  AL_fetus -> AL_conj_fetus; Vmax_conj_fetus*CVL_fetus/(Km_conj_fetus + (CVL_fetus + CVL_fetus_d8))
+rAL_fetus_deconjugation: AL_conj_fetus -> AL_fetus; Kd_fetus*CVL_conj_fetus
+
+
+rAL_fetus_d8:   -> AL_fetus_d8; QL_fetus*(CA_fetus_d8 - CVL_fetus_d8)
+rAL_fetus_conjugation_d8:  AL_fetus_d8 -> AL_conj_fetus_d8; Vmax_conj_fetus*CVL_fetus_d8/(Km_conj_fetus + (CVL_fetus + CVL_fetus_d8))
+rAL_fetus_deconjugation_d8: AL_conj_fetus_d8 -> AL_fetus_d8; Kd_fetus*CVL_conj_fetus_d8
+
+# REST OF BODY
+rAR_fetus:    -> AR_fetus; QR_fetus*(CA_fetus - CVR_fetus)
+
+rAR_fetus_d8:  -> AR_fetus_d8; QR_fetus*(CA_fetus_d8 - CVR_fetus_d8)
+
+
+# BPS-G in fetal blood
+rAB_conj_fetus: -> AB_conj_fetus; QL_fetus*CVL_conj_fetus + QR_fetus*CVR_conj_fetus - QC_fetus*CA_conj_fetus
+
+rAB_conj_fetus_d8: -> AB_conj_fetus_d8; QL_fetus*CVL_conj_fetus_d8 + QR_fetus*CVR_conj_fetus_d8 - QC_fetus*CA_conj_fetus_d8
+
+
+# BPSG in fetal liver
+#     conjugation + deconjugtion
+rAL_conj_fetus:   -> AL_conj_fetus; QL_fetus*(CA_conj_fetus - CVL_conj_fetus)
+
+rAL_conj_fetus_d8:   -> AL_conj_fetus_d8; QL_fetus*(CA_conj_fetus_d8 - CVL_conj_fetus_d8)
+
+# BPSG REST OF BODY fetus
+rAR_conj_fetus:    -> AR_conj_fetus; QR_fetus*(CA_conj_fetus - CVR_conj_fetus)
+
+rAR_conj_fetus_d8:    -> AR_conj_fetus_d8; QR_fetus*(CA_conj_fetus_d8 - CVR_conj_fetus_d8)
+
+
+# FETAL IV BPS DOSE
+rIV_fetal:  -> AB_fetus; IV_fetal_DOSE
+
+
+# FETAL IV BPS-G DOSE
+rIV_conj_fetal: -> AB_conj_fetus; IV_conj_fetal_DOSE
+
+
+
+#r12: AEF  -> APL; PA2*CEF/PF - PA1*CVPL
+
+# BLOOD BPS maternal
+r13:      -> AB; QF*CVF + QK*CVK + QL*CVL + QR*CVR + QPL*CVPL - QC*CA
+
+rAB_d8:    -> AB_d8; QF*CVF_d8 + QK*CVK_d8 + QL*CVL_d8 + QR*CVR_d8 + QPL*CVPL_d8 - QC*CA_d8
+
+
+# BPSconj MODEL maternal
+##############
+
+
+# FAT
+r14:      -> AFconj; QF*(CAconj - CVFconj)
+r14_d8:    -> AFconj_d8; QF*(CAconj_d8 - CVFconj_d8)
+
+
+# KIDNEY
+r15:      -> AKconj; QK*(CAconj - CVKconj)
+rAELconj: ABconj -> AELconj_blood  ; Kelconj_blood*CAconj
+r16:AKconj-> AELconj; Kelconj*CVKconj
+
+r15_d8:      -> AKconj_d8; QK*(CAconj_d8 - CVKconj_d8)
+rAELconj_d8: ABconj_d8 -> AELconj_blood_d8  ; Kelconj_blood*CAconj_d8
+r16_d8:AKconj_d8-> AELconj_d8; Kelconj*CVKconj_d8
+
+
+# LIVER
+r17:      -> ALconj; QL*(CAconj - CVLconj)
+r18:ALconj-> AGBLel; KGBLel*ALconj + Vmax_gbl_conj*CLconj/(Km_gbl_conj+(CLconj + CLconj_d8))
+
+r17_d8:      -> ALconj_d8; QL*(CAconj_d8 - CVLconj_d8)
+r18_d8:ALconj_d8-> AGBLel_d8; KGBLel*ALconj_d8 + Vmax_gbl_conj*CLconj_d8/(Km_gbl_conj+(CLconj+CLconj_d8))
+
+
+
+# REST OF BODY
+r19:      -> ARconj;QR*(CAconj - CVRconj)
+
+r19_d8:      -> ARconj_d8;QR*(CAconj_d8 - CVRconj_d8)
+
+
+# PLACENTA
+r20:      -> APLconj;QPL*(CAconj - CVPLconj)
+
+r20_d8:      -> APLconj_d8;QPL*(CAconj_d8 - CVPLconj_d8)
+
+
+# PLACENTAL TRANSFER
+#r21:AEFconj->APLconj; PA2conj*CEFconj/PFconj - PA1conj*CVPLconj
+
+
+# BLOOD
+r22:      ->ABconj; QF*CVFconj + QK*CVKconj  + QL*CVLconj + QPL*CVPLconj + QR*CVRconj - QC*CAconj
+
+r22_d8:      ->ABconj_d8; QF*CVFconj_d8 + QK*CVKconj_d8  + QL*CVLconj_d8 + QPL*CVPLconj_d8 + QR*CVRconj_d8 - QC*CAconj_d8

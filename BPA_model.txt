@@ -1,0 +1,694 @@
+MASS_BALANCE_CHECK := TOTAL_DOSE - (A_total_mBPA + AEL_total_mBPA + A_total_mBPAconj + AEL_total_mBPAconj)
+
+
+# MOLECULAR WEIGHTS [g/mol]
+MW_BPA  := 228.29
+MW_BPAG := 404.42
+
+
+
+###
+# Maternal (m) and fetal (f) blood concentrations in ng/ml
+##########
+CA_ngml_mBPA       := CA_mBPA     *MW_BPA  * 1E6
+CA_ngml_mBPAconj   := CA_mBPAconj *MW_BPAG * 1E6
+CA_ngml_mBPAtotal  := CA_ngml_mBPA + CA_ngml_mBPAconj
+CA_ngml_fBPA       := CA_fBPA     *MW_BPA  * 1E6
+CA_ngml_fBPAconj   := CA_fBPAconj *MW_BPAG * 1E6
+CA_ngml_fBPAtotal  := CA_ngml_fBPA + CA_ngml_fBPAconj
+
+
+###
+# Maternal (m) and fetal (f) blood concentrations in nM (nmol/l)
+#########
+CA_nM_mBPA         := CA_mBPA     * 1E9
+CA_nM_mBPAconj     := CA_mBPAconj * 1E9
+CA_nM_mBPAtotal    := CA_nM_mBPA + CA_nM_mBPAconj
+CA_nM_fBPA         := CA_fBPA     * 1E9
+CA_nM_fBPAconj     := CA_fBPAconj * 1E9
+CA_nM_fBPAtotal    := CA_nM_fBPA + CA_nM_fBPAconj
+
+
+
+###
+# Maternal (m) and fetal (f) plasma concentrations in ng/ml
+##########
+CA_plasma_ngml_mBPA       := CA_plasma_mBPA     *MW_BPA  * 1E6
+CA_plasma_ngml_mBPAconj   := CA_plasma_mBPAconj *MW_BPAG * 1E6
+CA_plasma_ngml_mBPAtotal  := CA_plasma_ngml_mBPA + CA_plasma_ngml_mBPAconj
+CA_plasma_ngml_fBPA       := CA_plasma_fBPA     *MW_BPA  * 1E6
+CA_plasma_ngml_fBPAconj   := CA_plasma_fBPAconj *MW_BPAG * 1E6
+CA_plasma_ngml_fBPAtotal  := CA_plasma_ngml_fBPA + CA_plasma_ngml_fBPAconj
+
+
+###
+# Maternal (m) and fetal (f) plasma concentrations in nM (nmol/l)
+#########
+CA_plasma_nM_mBPA         := CA_plasma_mBPA     * 1E9
+CA_plasma_nM_mBPAconj     := CA_plasma_mBPAconj * 1E9
+CA_plasma_nM_mBPAtotal    := CA_plasma_nM_mBPA + CA_plasma_nM_mBPAconj
+CA_plasma_nM_fBPA         := CA_plasma_fBPA     * 1E9
+CA_plasma_nM_fBPAconj     := CA_plasma_fBPAconj * 1E9
+CA_plasma_nM_fBPAtotal    := CA_plasma_nM_fBPA + CA_plasma_nM_fBPAconj
+
+
+###
+# Fetal total burden in nmol
+######
+fBPA_nmol_total := (AL_fBPA + AR_fBPA + AB_fBPA) * 1E9
+fBPAconj_nmol_total := (AL_fBPAconj + AR_fBPAconj + AB_fBPAconj) * 1E9
+
+
+###
+# Fetal total concentration in ng/ml
+######
+fBPA_ngml_total := (AL_fBPA + AR_fBPA + AB_fBPA) / V_fetus * MW_BPA  * 1E6
+fBPAconj_ngml_total := (AL_fBPAconj + AR_fBPAconj + AB_fBPAconj) / V_fetus *MW_BPAG  * 1E6
+
+
+
+
+
+###
+# Blood:plasma partitioning
+#####
+
+K_blood_plasma_mBPA      = 1
+K_blood_plasma_mBPAconj  = 1
+K_blood_plasma_fBPA     := K_blood_plasma_mBPA
+K_blood_plasma_fBPAconj := K_blood_plasma_mBPAconj
+
+
+CA_plasma_mBPA      := CA_mBPA     / K_blood_plasma_mBPA
+CA_plasma_mBPAconj  := CA_mBPAconj / K_blood_plasma_mBPAconj
+CA_plasma_fBPA      := CA_fBPA     / K_blood_plasma_fBPA
+CA_plasma_fBPAconj  := CA_fBPAconj / K_blood_plasma_fBPAconj
+
+
+
+
+###
+# fraction unbound in plasma
+#########
+
+fu_mBPA     = 1
+fu_mBPAconj = 1
+fu_fBPA     = 1
+fu_fBPAconj = 1
+
+
+
+
+
+
+###
+# MATERNAL BLOOD AND TISSUE CONCENTRATIONS
+#######
+
+
+# mBPA tissue concentrations
+CF_mBPA  := AF_mBPA /VF
+CK_mBPA  := AK_mBPA /VK
+CL_mBPA  := AL_mBPA /VL
+CPL_mBPA := APL_mBPA/VPL
+CR_mBPA  := AR_mBPA /VR
+CA_mBPA  := AB_mBPA /VB
+
+
+# total mBPA amount [M] in all maternal tissues
+A_total_mBPA   := AF_mBPA + AK_mBPA + AL_mBPA + APL_mBPA + AR_mBPA + AB_mBPA
+
+# total mBPA amount [M] eliminated 
+AEL_total_mBPA := AEL_kidney_mBPA + AEL_blood_mBPA
+
+
+# mBPA venous concentration (leaving the tissues)
+CVF_mBPA  := CF_mBPA /PF_mBPA
+CVK_mBPA  := CK_mBPA /PK_mBPA
+CVL_mBPA  := CL_mBPA /PL_mBPA
+CVPL_mBPA := CPL_mBPA/PPL_mBPA
+CVR_mBPA  := CR_mBPA /PR_mBPA
+
+
+
+# mBPAconj tissue concentrations
+CF_mBPAconj  := AF_mBPAconj /VF
+CK_mBPAconj  := AK_mBPAconj /VK
+CL_mBPAconj  := AL_mBPAconj /VL
+CPL_mBPAconj := APL_mBPAconj/VPL
+CR_mBPAconj  := AR_mBPAconj /VR
+CA_mBPAconj  := AB_mBPAconj /VB
+
+
+# total mBPAconj amount [M] in all maternal tissues
+A_total_mBPAconj   := AF_mBPAconj + AK_mBPAconj + AL_mBPAconj + APL_mBPAconj + AR_mBPAconj + AB_mBPAconj
+
+# total mBPAconj amount [M] eliminated 
+AEL_total_mBPAconj := AEL_kidney_mBPAconj + AEL_blood_mBPAconj + AEL_liver_mBPAconj
+
+
+# mBPAconj venous concentration (leaving the tissues)
+CVF_mBPAconj  := CF_mBPAconj /PF_mBPAconj
+CVK_mBPAconj  := CK_mBPAconj /PK_mBPAconj
+CVL_mBPAconj  := CL_mBPAconj /PL_mBPAconj
+CVPL_mBPAconj := CPL_mBPAconj/PPL_mBPAconj
+CVR_mBPAconj  := CR_mBPAconj /PR_mBPAconj
+
+
+
+
+
+
+
+
+
+###
+# FETAL BLOOD AND TISSUE CONCENTRATIONS
+#######
+
+
+# fBPA tissue concentrations
+CA_fBPA := AB_fBPA/VB_fetus
+CL_fBPA := AL_fBPA/VL_fetus
+CR_fBPA := AR_fBPA/VR_fetus
+
+
+# fBPA venous concentrations (leaving the tissues)
+CVL_fBPA := CL_fBPA/PL_fBPA 
+CVR_fBPA := CR_fBPA/PR_fBPA
+
+# fBPAconj tissue concentrations
+CA_fBPAconj := AB_fBPAconj/VB_fetus
+CL_fBPAconj := AL_fBPAconj/VL_fetus
+CR_fBPAconj := AR_fBPAconj/VR_fetus
+
+
+# fBPAconj venous concentrations (leaving the tissues)
+CVL_fBPAconj := CL_fBPAconj/PL_fBPAconj
+CVR_fBPAconj := CR_fBPAconj/PR_fBPAconj
+
+
+
+
+
+
+###
+# METABOLISM AND CLEARANCE PARAMETERS
+#########
+#########################
+
+
+# METABOLISM PARAMETERS
+Vmax_mg_h_kg_mBPA    = 450        # [mg/h/kgLIVER]
+Km_mg_L_mBPA         = 0.05       # [mg/L]
+Vmax_mg_h_kg_fBPA    = 450        # [mg/h/kgLIVER]
+Km_mg_L_fBPA         = 0.05       # [mg/L]
+
+
+Vmax_mBPA := Vmax_mg_h_kg_mBPA * (VL ^ 0.75) * 10^(-3)/MW_BPA      # [mol/h]
+Km_mBPA   := Km_mg_L_mBPA * 10^(-3)/MW_BPA        # [mol/L]
+
+
+Vmax_fBPA := Vmax_mg_h_kg_fBPA * (VL_fetus ^ 0.75) * 10^(-3)/MW_BPA      # [mol/h]
+Km_fBPA   := Km_mg_L_fBPA*10^(-3)/MW_BPA        # [mol/L]
+
+
+####
+# DECONJUGATION IN FETAL LIVER
+####
+Kd_fBPAconj = 0
+
+
+###
+# DECONJUGATION IN MATERNAL LIVER
+Kd_mBPAconj = 0
+
+
+###
+# RENAL CLEARANCE PARAMETERS
+######
+Kel_kidney_mBPA = 0
+Kel_kidney_mBPAconj = 0
+Kel_blood_mBPA = 0
+Kel_blood_mBPAconj = 0
+
+
+###
+# HEPATIC CLEARANCE PARAMETERS
+Kel_liver_mBPAconj = 0
+
+
+
+
+
+
+###
+# Gingrich et al. (2019) SC dosing
+############
+
+
+DOSE_g := PSCDOSE_mBPA * BW
+
+# Gingrich total SC dose in mol
+DOSE := DOSE_g/MW_BPA
+
+
+
+###
+# Multiple SC dosing for simulation
+#     same dose administered every PERIOD hours (dose same as single Gingrich dose)
+#
+# To do multiple same dose administrations do:
+#       PSCDOSE_mBPA = xxxx
+#       IS_MULTI = 1
+#       PERIOD = yy
+############
+
+IS_MULTI = 0
+PERIOD = 24
+DOSE_MULTI := IS_MULTI * DOSE
+
+
+
+#####
+# Corbel et al. (2013) IV dosing
+#############
+
+
+
+# BPA maternal dosing for Corbel (2013)
+IVDOSE_g_mBPA := PIVDOSE_mBPA*BW/24
+IVDOSE_mBPA = 0
+    at time>=1e-8: IVDOSE_mBPA=IVDOSE_g_mBPA/MW_BPA
+    at time>=24: IVDOSE_mBPA=0;
+	
+IVDOSE_mol_mBPA = PIVDOSE_mBPA*BW/MW_BPA
+
+
+
+# BPA-G maternal dosing for Corbel (2013)
+IVDOSE_g_mBPAconj := PIVDOSE_mBPAconj*BW/24
+IVDOSE_mBPAconj = 0
+    at time>=1e-8: IVDOSE_mBPAconj=IVDOSE_g_mBPAconj/MW_BPAG
+    at time>=24: IVDOSE_mBPAconj=0;
+
+IVDOSE_mol_mBPAconj = PIVDOSE_mBPAconj*BW/MW_BPAG
+
+
+# BPA fetal dosing for Corbel (2013)
+IVDOSE_g_fBPA := PIVDOSE_fBPA*(2.5)/24				# Corbel fixed fetal weight to 2.5 kg when determining dose
+IVDOSE_fBPA = 0
+    at time>=1e-8: IVDOSE_fBPA = IVDOSE_g_fBPA/MW_BPA
+    at time>=24: IVDOSE_fBPA = 0;
+    
+IVDOSE_mol_fBPA = PIVDOSE_fBPA*V_fetus/MW_BPA
+
+# BPA-G fetal dosing for Corbel (2013)
+IVDOSE_g_fBPAconj := PIVDOSE_fBPAconj*(2.5)/24		# Corbel fixed fetal weight to 2.5 kg when determining dose
+IVDOSE_fBPAconj = 0
+    at time>=1e-8: IVDOSE_fBPAconj = IVDOSE_g_fBPAconj/MW_BPAG
+    at time>=24: IVDOSE_fBPAconj = 0;
+
+IVDOSE_mol_fBPAconj = PIVDOSE_fBPAconj*V_fetus/MW_BPAG
+
+
+
+
+
+#######
+# DOSING PARAMETERS
+#     units are g/kg(/day - for IV doses)
+#     defaults are 0 (no dosing)
+######
+
+
+
+# Gingrich et al. 2018
+# SC dose in g/kg
+PSCDOSE_mBPA            = 0
+
+
+# Corbel et al. 2013
+# (total) IV dose in g/kg
+# .   administered over 24h
+PIVDOSE_mBPA            = 0 
+PIVDOSE_mBPAconj        = 0
+PIVDOSE_fBPA            = 0
+PIVDOSE_fBPAconj        = 0
+
+
+
+# Mother body weight and blood flows
+###############################
+
+SF = 1
+BW = 76.25
+QCC = 6.9
+QFC = 0.091
+QKC = 0.064
+QLC = 0.183
+QPLC = 0.0513
+QRC := 1 - QFC - QKC - QLC - QPLC
+
+QC := QCC * (BW ^ SF)
+QF := QFC * QC
+QK := QKC * QC
+QL := QLC * QC
+QPL := QPLC * QC
+QR := QRC * QC
+
+
+
+# Fetus blood flows
+###################
+
+QRC_fetus := 1 - QLC
+QC_fetus  := QCC * V_fetus
+QL_fetus  := QLC * QC_fetus
+QR_fetus  := (1 - QLC) * QC_fetus 
+
+
+
+# Maternal and fetal hematocrit
+#######################
+
+mHCT = 0.33
+fHCT = 0.33
+
+
+
+# Mother organ volumes
+#######################
+
+Vbody := BW
+
+# fractional tissue volumes
+VFC = 0.168
+VKC = 0.003
+VLC = 0.015
+VBC = 0.045
+VPLEFC = 0.078                              # placenta + embryo/fetus
+VEFC = 0.0525                               # embryo/fetus fractional volume
+VPLC := VPLEFC - VEFC                        # placenta fractional volume
+VRC := 1 - VFC - VKC -VLC - VBC - VPLEFC     # rest of body fractional volume
+
+
+# total tissue volumes
+VF := VFC * Vbody
+VK := VKC * Vbody
+VL := VLC * Vbody
+VPL := VPLC * Vbody
+VEF := VEFC * Vbody
+VR := VRC * Vbody
+VB := VBC * Vbody
+
+
+
+
+
+
+
+# Fetal organ volumes
+#######################
+
+V_fetus  := VEFC*Vbody
+VB_fetus := VBC*V_fetus
+VL_fetus := VLC*V_fetus    # same fractional size as mother
+VR_fetus := (1 - VLC - VBC)*V_fetus
+
+
+
+####
+# Partitioning coefficients (mother)
+#########
+
+PF_mBPA  = 9.81
+PK_mBPA  = 1.83
+PL_mBPA  = 0.9
+PR_mBPA  = 1.12
+PPL_mBPA = 1
+
+
+
+PF_mBPAconj  = 0.22
+PK_mBPAconj  = 5.61
+PL_mBPAconj  = 6.63
+PR_mBPAconj  = 0.51
+PPL_mBPAconj = 1
+
+
+
+
+####
+# Partitioning coefficients (fetus)
+#     if not assigned values, assumed the same as mother
+#########
+
+PL_fBPA := PL_mBPA
+PR_fBPA = 1
+
+PL_fBPAconj := PL_mBPAconj
+PR_fBPAconj = 1
+
+
+
+
+
+
+
+
+#####
+# SC absorption parameters
+########
+FSC = 1               # bioavailibility for sc absorption
+Ka1 = 0.15            # first order rate for sc absorption
+Ka2 = 0
+Kt  = 0
+
+
+
+###
+# FETAL TRANSFER PARAMETERS
+####
+k1t = 0
+k2t = 0
+
+
+
+
+
+
+###
+# INITIAL VALUES
+########
+
+
+
+# RENAL ELIMINATION
+AEL_kidney_mBPA = 0
+AEL_blood_mBPA = 0
+AEL_kidney_mBPAconj = 0
+AEL_blood_mBPAconj = 0
+
+# HEPATIC ELIMINATION
+AEL_liver_mBPAconj = 0
+
+# METABOLISM
+AM = 0
+
+# SC absorption
+ASC = FSC*DOSE
+ASCf = 0
+    at TIME % PERIOD < 1: ASC = ASC + FSC * DOSE_MULTI
+
+
+
+# mBPA initial values
+AF_mBPA = 0
+AK_mBPA = 0
+AL_mBPA = 0
+AR_mBPA = 0
+APL_mBPA = 0
+AB_mBPA = 0
+
+# mBPAconj initial values
+AF_mBPAconj = 0
+AK_mBPAconj = 0
+AL_mBPAconj = 0
+AR_mBPAconj = 0
+APL_mBPAconj = 0
+AB_mBPAconj = 0
+
+# fBPA initial values
+AB_fBPA = 0
+AL_fBPA = 0
+AR_fBPA = 0
+
+# fBPAconj initial values
+AB_fBPAconj = 0
+AL_fBPAconj = 0
+AR_fBPAconj = 0
+
+
+TOTAL_DOSE = 0
+TOTAL_DOSE_mol = DOSE + IVDOSE_mol_mBPA + IVDOSE_mol_mBPAconj + IVDOSE_mol_fBPA + IVDOSE_mol_fBPAconj
+
+
+
+AEL_renal_mBPA_percent_dose := AEL_blood_mBPA / TOTAL_DOSE_mol * 100
+AEL_renal_mBPAconj_percent_dose := AEL_blood_mBPAconj / TOTAL_DOSE_mol * 100
+AEL_liver_mBPAconj_percent_dose := AEL_liver_mBPAconj / TOTAL_DOSE_mol * 100
+
+
+
+
+###########
+###  MODEL EQUATIONS
+####
+
+
+
+
+###
+# DOSING
+##########
+
+
+
+
+###
+# SC (subcutaneous) dosing of BPA to mother
+####
+
+#     two compartment S.C. dosing
+# .   setting Kt=0 and Ka2=0 (default) makes it a single compartment S.C. dosing  
+r_SC_01: ASC  -> AB_mBPA; Ka1*ASC
+r_SC_02: ASC  -> ASCf; Kt*ASC
+r_SC_03: ASCf -> AB_mBPA; Ka2*ASCf
+
+
+
+
+###
+# IV DOSING
+###
+
+# maternal BPA
+r_IV_mBPA:        -> AB_mBPA; IVDOSE_mBPA
+
+# maternal BPAconj
+r_IV_mBPAconj:   -> AB_mBPAconj; IVDOSE_mBPAconj
+
+
+# fetal BPA
+r_IV_fBPA:       -> AB_fBPA; IVDOSE_fBPA
+
+
+# fetal BPAconj
+r_IV_fBPAconj:   -> AB_fBPAconj; IVDOSE_fBPAconj
+
+
+####
+# TOTAL ADMINISTERED DOSE SO FAR in M
+######
+
+r_TOTAL_DOSE:     -> TOTAL_DOSE; Ka1*ASC + Ka2*ASCf + IVDOSE_mBPA + IVDOSE_mBPAconj + IVDOSE_fBPA + IVDOSE_fBPAconj
+
+
+
+
+
+####
+# MATERNAL BPA model
+#########
+
+
+
+r_fat_mBPA:                             -> AF_mBPA;  QF*(CA_mBPA - CVF_mBPA)
+r_kidney_mBPA:                          -> AK_mBPA;  QK*(CA_mBPA - CVK_mBPA)
+r_liver_mBPA:                           -> AL_mBPA;  QL*(CA_mBPA - CVL_mBPA)
+r_rest_mBPA:                            -> AR_mBPA;  QR*(CA_mBPA - CVR_mBPA)
+r_plac_mBPA:                            -> APL_mBPA; QPL*(CA_mBPA - CVPL_mBPA)
+r_blood_mBPA:                           -> AB_mBPA;  (QF*CVF_mBPA + QK*CVK_mBPA + QL*CVL_mBPA + QPL*CVPL_mBPA + QR*CVR_mBPA- QC*CA_mBPA)
+
+
+# BPA RENAL CLEARANCE
+r_CL_renal_from_blood_mBPA:        AB_mBPA   -> AEL_blood_mBPA ;  Kel_blood_mBPA * CA_plasma_mBPA
+r_CL_renal_from_kidney_mBPA:       AK_mBPA   -> AEL_kidney_mBPA;  Kel_kidney_mBPA*CVK_mBPA
+
+
+# BPA METABOLISM (in the liver)
+r_MET_liver_mBPA:                  AL_mBPA   -> AL_mBPAconj; Vmax_mBPA*CVL_mBPA/(Km_mBPA + CVL_mBPA)
+
+
+# BPA deconjugation (in the liver)
+#    Kd_mBPAconj = 0 (by default)
+r_DECONJ_liver_mBPAconj:          AL_mBPAconj -> AL_mBPA; Kd_mBPAconj * CVL_mBPAconj
+
+
+
+####
+# MATERNAL BPAconj model
+#########
+
+r_fat_mBPAconj:                          -> AF_mBPAconj;  QF*(CA_mBPAconj - CVF_mBPAconj)
+r_kidney_mBPAconj:                       -> AK_mBPAconj;  QK*(CA_mBPAconj - CVK_mBPAconj)
+r_liver_mBPAconj:                        -> AL_mBPAconj;  QL*(CA_mBPAconj - CVL_mBPAconj)
+r_rest_mBPAconj:                         -> AR_mBPAconj;  QR*(CA_mBPAconj - CVR_mBPAconj)
+r_plac_mBPAconj:                         -> APL_mBPAconj;QPL*(CA_mBPAconj - CVPL_mBPAconj)
+r_blood_mBPAconj:                        -> AB_mBPAconj; (QF*CVF_mBPAconj + QK*CVK_mBPAconj  + QL*CVL_mBPAconj + QR*CVR_mBPAconj + QPL*CVPL_mBPAconj  - QC*CA_mBPAconj)
+
+
+
+
+# BPAconj RENAL CLEARANCE
+r_CL_renal_from_blood_mBPAconj:   AB_mBPAconj -> AEL_blood_mBPAconj;  Kel_blood_mBPAconj * CA_mBPAconj
+r_CL_renal_from_kidney_mBPAconj:  AK_mBPAconj -> AEL_kidney_mBPAconj; Kel_kidney_mBPAconj * CVK_mBPAconj
+
+# BPAconj HEPATIC CLEARANCE
+r_CL_hepatic_mBPAconj:            AL_mBPAconj -> AEL_liver_mBPAconj; Kel_liver_mBPAconj * AL_mBPAconj
+
+
+####
+# MATERNAL --> FETAL TRANSFER model
+############
+
+# CVPL <--> CA_fBPA
+rPLtoFetus: APL_mBPA -> AB_fBPA; k1t*CVPL_mBPA - k2t*CA_fBPA
+
+
+
+
+
+
+####
+# FETAL BPA model
+#######
+
+# BPA in fetal blood
+#     possesses placental transfer
+
+r_liver_fBPA:      -> AL_fBPA; QL_fetus*(CA_fBPA - CVL_fBPA)
+r_rest_fBPA:       -> AR_fBPA; QR_fetus*(CA_fBPA - CVR_fBPA)
+r_blood_fBPA:      -> AB_fBPA; (QL_fetus*CVL_fBPA + QR_fetus*CVR_fBPA - QC_fetus*CA_fBPA)
+
+
+
+###
+# FETAL conjugation/deconjugation
+#######
+
+rAL_fetus_conjugation:   AL_fBPA -> AL_fBPAconj; Vmax_fBPA*CVL_fBPA/(Km_fBPA + CVL_fBPA)
+rAL_fetus_deconjugation: AL_fBPAconj -> AL_fBPA; Kd_fBPAconj * CVL_fBPAconj
+
+
+
+
+
+####
+# FETAL BPAconj model
+#######
+
+rAL_fBPAconj:   -> AL_fBPAconj; QL_fetus*(CA_fBPAconj - CVL_fBPAconj)
+rAR_fBPAconj:   -> AR_fBPAconj; QR_fetus*(CA_fBPAconj - CVR_fBPAconj)
+rAB_fBPAconj:   -> AB_fBPAconj; (QL_fetus*CVL_fBPAconj + QR_fetus*CVR_fBPAconj - QC_fetus*CA_fBPAconj)
